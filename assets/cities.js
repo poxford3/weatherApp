@@ -1,4 +1,4 @@
-cities = Array(
+export const cities = [
     'New York, New York',
     'Los Angeles, California',
     'Chicago, Illinois',
@@ -28337,4 +28337,4 @@ cities = Array(
     'The Ranch, Minnesota',
     'Shamrock, Oklahoma',
     'Monowi, Nebraska',
-)
+];

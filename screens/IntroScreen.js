@@ -1,16 +1,20 @@
 import { View, Text, StyleSheet, SafeAreaView, Image, Linking, } from 'react-native'
 import React, {useState} from 'react'
 import {SearchBar} from 'react-native-elements'
-import cities from '../assets/cities'
+import {cities} from '../assets/cities'
 import { Button } from 'react-native-elements/dist/buttons/Button'
 
 
 export default function IntroScreen({navigation}) {
     
     const [randomCity, setRandomCity] = useState("")
+    var randCity = "";
 
     const generateRandomCity = () => {
-        const randCity = cities[Math.floor(Math.random()*cities.length)]
+        console.log("-----")
+        console.log(cities.length)
+        console.log(Math.floor(Math.random()*cities.length))
+        randCity = cities[Math.floor(Math.random()*cities.length)]
         setRandomCity(randCity)
         console.log(randCity)
     }
@@ -40,8 +44,10 @@ export default function IntroScreen({navigation}) {
                  />
             </View> 
             <View style={{height:'50%'}}>
-            <Text>  random city is {setRandomCity}</Text>
-            <Button style={{width:30, height: 30, backgroundColor: '#000'}} onPress={generateRandomCity}/>
+            <Text> random city is {randCity}</Text>
+            <Text>{search}</Text>
+            {/* <Text>placeholder</Text> */}
+            <Button style={{width:30, height: 30, backgroundColor: '#000', left: 10}} onPress={generateRandomCity}/>
             </View>
             <View style={styles.footer}>
                 <Text>Created by: Parker :)</Text>
