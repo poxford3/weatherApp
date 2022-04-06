@@ -9278,7 +9278,7 @@ export const cities = [
     "Platteville, Colorado, 40.2221, -104.834",
     "Windsor, Virginia, 36.8095, -76.7406",
     "Westworth Village, Texas, 32.7599, -97.4239",
-    "ilson's Mills, North Carolin, 35.5863, -78.3644",
+    "Wilson's Mills, North Carolina, 35.5863, -78.3644",
     "North Shore, California, 33.5157, -115.9092",
     "East Gaffney, South Carolina, 35.0846, -81.6219",
     "Kulpmont, Pennsylvania, 40.7951, -76.4718",

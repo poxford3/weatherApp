@@ -1,13 +1,22 @@
-import { View, Text, StyleSheet, SafeAreaView, Image, Linking, ActivityIndicator} from 'react-native'
+import { View,
+         Text, 
+         StyleSheet, 
+         SafeAreaView, 
+         Image, 
+         Linking, 
+         ActivityIndicator,
+         ImageBackground} from 'react-native'
 import React, {useState, useEffect} from 'react'
 import {SearchBar} from 'react-native-elements'
-import {cities} from '../assets/cities'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { cities } from '../assets/cities'
+import { icons } from '../assets/icons'
 import { Button } from 'react-native-elements/dist/buttons/Button'
 
 
 export default function IntroScreen({navigation}) {
     
-    const [isLoading, setLoading] = useState(false);
+    const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState({});
     const [lat, setLat] = useState("");
     const [lng, setLng] = useState("");
@@ -23,43 +32,35 @@ export default function IntroScreen({navigation}) {
             console.log("-----")
             randCityTotal = cities[Math.floor(Math.random()*cities.length)];
             randCityArray = randCityTotal.split(", ");
-            console.log(randCityArray)
+            // console.log(randCityArray)
             randCity = randCityArray[0]+", "+randCityArray[1];
             setRandomCity(randCity);
-            // randLat = randCityArray[2];
             setLat(randCityArray[2]);
-            // randLng = randCityArray[3];
             setLng(randCityArray[3]);
             console.log(randCity)
-            if (lat != randCityArray[2]){
-                setLat(randCityArray[2]);
-                console.log(lat,"the")
-            } else {
-            console.log(lat+", "+randCityArray[2]);
-            console.log(lng+", "+randCityArray[3]);
-            console.log(data.temp,' rand city button');
-            }
-
+            // console.log(lat+", "+randCityArray[2]);
+            // console.log(lng+", "+randCityArray[3]);
+            console.log(data.temp,'rand city button',isLoading);
         } 
+        generateRandomCity()
+    }, []);
+
+    useEffect(() => {
         const getWeather = async () => {
             try {
-                console.log(lat," is lat and ",lng);
+                // console.log(lat," is lat and ",lng);
                 const response = (await fetch('https://api.openweathermap.org/data/2.5/weather?units=imperial&lat='+lat+'&lon='+lng+'&appid='+api_key+''));
                 const json = (await response.json());
                 setData(json.main);
-                console.log(data.temp, 'get weather');
+                // console.log(data.temp, 'get weather');
             } catch (error) {
                 console.error(error);
             } finally {
                 setLoading(false);
            }
         }
-        generateRandomCity()
         getWeather()
-    }, []);
-
-
-
+    }, [lat,lng,randomCity])
 
     const [search, setSearch] = useState("");
 
@@ -68,6 +69,8 @@ export default function IntroScreen({navigation}) {
     };
 
     return (
+        <ImageBackground
+        source={'./assets/cloud_bg.png'} resizeMode='fill' style={styles.container}>
         <SafeAreaView styles={styles.container}>
             <View style={styles.header}>
                 <View style={{flexDirection:'row', alignItems:'flex-end'}}>
@@ -87,9 +90,12 @@ export default function IntroScreen({navigation}) {
             </View> 
             <View style={styles.midSection}>
                 <Text style={{fontSize: 30}}>{randomCity}</Text>
-                <Text>{"" && data.temp}</Text>
-                {/* <Text>placeholder</Text> */}
-                {/* <Button style={{width:30, height: 30, backgroundColor: '#000', left: 10}} onPress={generateRandomCity}/> */}
+                <Text>{lat}</Text>
+                <Text>{lng}</Text>
+                {/* <Text>{ isLoading ? "" : data.temp}</Text> */}
+                <View style={{width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
+                    <Ionicons name={icons.storm} color={'black'} size={30}/>
+                </View>
             </View>
             <View style={styles.footer}>
                 <Text>Created by: Parker :)</Text>
@@ -101,6 +107,7 @@ export default function IntroScreen({navigation}) {
                 </Text>
             </View>   
         </SafeAreaView>
+        </ImageBackground>
   )
 }
 
@@ -109,14 +116,18 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        // padding: 10
+        // paddingHorizontal: 10
     },
     footer: {
         justifyContent: 'flex-end',
-        alignItems:'center'
+        alignItems:'center',
+        paddingBottom: 10,
     },  
     header: {
         padding: 10,
+    },
+    imageBG: {
+        flex: 1,
     },
     midSection: {
         height: '50%',
@@ -124,6 +135,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderColor: '#000',
         borderWidth: 1,
+        padding: 10,
     },
     searchBar: {
         backgroundColor: '#fff',

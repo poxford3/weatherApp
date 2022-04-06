@@ -2,5 +2,6 @@
 
 weather app that's better than whatever you already use for your phone
 
-errors:
-wont get the city's information at the same time as the name???
+to do:
+set up what the image will be based on the type of weather we're seeing in the
+api response
