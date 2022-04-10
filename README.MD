@@ -8,4 +8,4 @@ api response
 
 # current photo of app
 
-<img src="assets/currentImage.png" width="100" height="300">
+<img src="assets/currentImage.png" width="200" height="500">
