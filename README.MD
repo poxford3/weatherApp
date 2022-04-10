@@ -8,4 +8,4 @@ api response
 
 # current photo of app
 
-![image of main screen of app](assets/currentImage.png | width=100)
+<img src="assets/currentImage.png" width="100" height="300">
