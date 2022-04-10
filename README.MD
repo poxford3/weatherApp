@@ -10,4 +10,4 @@ api response
 
 ![image of main screen of app](https://github.com/poxford3/weatherApp/blob/master/currentImage.png?raw=true)
 
-![image of main screen of app]('/assets/currentImage.png')
+![image of main screen of app](assets/currentImage.png)
