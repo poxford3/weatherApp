@@ -20,7 +20,8 @@ export default function IntroScreen({navigation}) {
     const [data, setData] = useState({});
     const [lat, setLat] = useState("");
     const [lng, setLng] = useState("");
-    const [randomCity, setRandomCity] = useState("")
+    const [randomCity, setRandomCity] = useState("");
+    const [icon, setIcon] = useState([]);
 
     var randCity,randLat,randLng = "";
     const api_key = "08ff95f3b0f97607b3b375dc9793f8b2";
@@ -32,14 +33,11 @@ export default function IntroScreen({navigation}) {
             console.log("-----")
             randCityTotal = cities[Math.floor(Math.random()*cities.length)];
             randCityArray = randCityTotal.split(", ");
-            // console.log(randCityArray)
             randCity = randCityArray[0]+", "+randCityArray[1];
             setRandomCity(randCity);
             setLat(randCityArray[2]);
             setLng(randCityArray[3]);
             console.log(randCity)
-            // console.log(lat+", "+randCityArray[2]);
-            // console.log(lng+", "+randCityArray[3]);
             console.log(data.temp,'rand city button',isLoading);
         } 
         generateRandomCity()
@@ -52,6 +50,7 @@ export default function IntroScreen({navigation}) {
                 const response = (await fetch('https://api.openweathermap.org/data/2.5/weather?units=imperial&lat='+lat+'&lon='+lng+'&appid='+api_key+''));
                 const json = (await response.json());
                 setData(json.main);
+                setIcon(json.weather)
                 // console.log(data.temp, 'get weather');
             } catch (error) {
                 console.error(error);
@@ -62,6 +61,14 @@ export default function IntroScreen({navigation}) {
         getWeather()
     }, [lat,lng,randomCity])
 
+    useEffect(() => {
+        const getWeatherSymbol = () => {
+            icon.map(x => console.log(x.id))
+            // console.log(icon)
+        }
+        getWeatherSymbol()
+    }, [])
+
     const [search, setSearch] = useState("");
 
     const updateSearch = (search) => {
@@ -70,7 +77,7 @@ export default function IntroScreen({navigation}) {
 
     return (
         <ImageBackground
-        source={'./assets/cloud_bg.png'} resizeMode='fill' style={styles.container}>
+        source={'./assets/cloud_bg.png'} style={styles.container}>
         <SafeAreaView styles={styles.container}>
             <View style={styles.header}>
                 <View style={{flexDirection:'row', alignItems:'flex-end'}}>
@@ -90,11 +97,18 @@ export default function IntroScreen({navigation}) {
             </View> 
             <View style={styles.midSection}>
                 <Text style={{fontSize: 30}}>{randomCity}</Text>
-                <Text>{lat}</Text>
-                <Text>{lng}</Text>
-                {/* <Text>{ isLoading ? "" : data.temp}</Text> */}
+                {/* <Text>{lat}</Text>
+                <Text>{lng}</Text> */}
+                {typeof data !== 'undefined' ? <Text>temperature is {data.temp}°F</Text> : <View></View>}
+                {typeof icon !== 'undefined' ? 
                 <View style={{width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
-                    <Ionicons name={icons.storm} color={'black'} size={30}/>
+                    <Text>{icon.map(x => console.log(x.id))}</Text>
+                    {/* <Ionicons name={icons.partlyCloudy} color={'black'} size={30}/> */}
+                </View> 
+                : 
+                <View></View>}
+                <View style={{width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
+                    <Ionicons name={icons.partlyCloudy} color={'black'} size={30}/>
                 </View>
             </View>
             <View style={styles.footer}>
@@ -105,7 +119,7 @@ export default function IntroScreen({navigation}) {
                 >
                     [City list obtained from simplemaps.com]
                 </Text>
-            </View>   
+            </View>
         </SafeAreaView>
         </ImageBackground>
   )
