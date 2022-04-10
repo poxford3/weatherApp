@@ -5,4 +5,5 @@ export const icons = {
     rain: 'rainy',
     storm: 'thunderstorm',
     snow: 'snow',
+    moon: 'moon'
 }
