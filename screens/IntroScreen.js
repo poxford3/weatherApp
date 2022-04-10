@@ -97,19 +97,13 @@ export default function IntroScreen({navigation}) {
                  />
             </View> 
             <View style={styles.midSection}>
-                <Text style={{fontSize: 30, alignItems: 'center', color: 'white'}}>{randomCity}</Text>
+                <Text style={{fontSize: 30, justifyContent: 'center', color: 'white'}}>{randomCity}</Text>
                 {/* <Text>{lat}</Text>
                 <Text>{lng}</Text> */}
                 {typeof data !== 'undefined' ? <Text style={styles.centerText}>{data.temp}°F</Text> : <View></View>}
                 {typeof icon !== 'undefined' ? 
                 <View style={{justifyContent: 'center', alignItems: 'center' }}>
-                    <Text style={styles.centerText}>{iconValue}</Text>
-                    <View>
-                        <Text style={styles.centerText}>image below</Text>
-                        {/* <Image source={{uri: `http://openweathermap.org/img/wn/${iconValue}@2x.png`}}/> */}
-                        <Image source={{uri: `http://openweathermap.org/img/wn/02d@2x.png`}}/>
-                    </View>
-                    {/* <Ionicons name={icons.partlyCloudy} color={'black'} size={30}/> */}
+                    <Image style={styles.icon} source={{uri: `http://openweathermap.org/img/wn/${iconValue}@2x.png`}}/>
                 </View> 
                 : 
                 <View></View>}
@@ -153,6 +147,10 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#fff'
     },
+    icon: {
+        height: 50,
+        width: 50,
+    },  
     imageBG: {
         flex: 1,
     },
