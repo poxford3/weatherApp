@@ -5,12 +5,12 @@ import { View,
          Image, 
          Linking, 
          ActivityIndicator,
-         ImageBackground} from 'react-native'
+         ImageBackground,
+         TouchableOpacity} from 'react-native'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import React, {useState, useEffect} from 'react'
 import {SearchBar} from 'react-native-elements'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import { cities } from '../assets/cities'
-import { icons } from '../assets/icons'
 
 
 export default function IntroScreen({navigation}) {
@@ -25,8 +25,6 @@ export default function IntroScreen({navigation}) {
 
     var randCity,randLat,randLng = "";
     const api_key = "08ff95f3b0f97607b3b375dc9793f8b2";
-
-
 
     useEffect(() => {
         const generateRandomCity = () => {
@@ -89,17 +87,26 @@ export default function IntroScreen({navigation}) {
                 </View>
                 <View style={{paddingVertical:15}}></View>
                 <SearchBar
-                    style={styles.searchBar}
-                    placeholder="Enter a city..."
-                    value={search}
-                    onChangeText={updateSearch}
-                    lightTheme
-                 />
+                        style={styles.searchBar}
+                        placeholder="Enter a city..."
+                        value={search}
+                        onChangeText={updateSearch}
+                        lightTheme
+                    />
+                <View style={{flexDirection: 'row'}}>
+
+                    <TouchableOpacity 
+                        style={{justifyContent: 'center', alignItems: 'center', backgroundColor: 'lightgray', borderRadius: 5, paddingLeft: -5}}
+                        onPress={() => navigation.navigate("Weather", {
+                            city: search
+                        })}
+                    >
+                        <Ionicons name='md-send-sharp' size={30}/>
+                    </TouchableOpacity>
+                </View>
             </View> 
             <View style={styles.midSection}>
                 <Text style={{fontSize: 30, justifyContent: 'center', color: 'white'}}>{randomCity}</Text>
-                {/* <Text>{lat}</Text>
-                <Text>{lng}</Text> */}
                 {typeof data !== 'undefined' ? <Text style={styles.centerText}>{data.temp}°F</Text> : <View></View>}
                 {typeof icon !== 'undefined' ? 
                 <View style={{justifyContent: 'center', alignItems: 'center' }}>
@@ -107,16 +114,12 @@ export default function IntroScreen({navigation}) {
                 </View> 
                 : 
                 <View></View>}
-                {/* <View style={{width: 40, height: 40, justifyContent: 'center', alignItems: 'center' }}>
-                    <Ionicons name={icons.partlyCloudy} color={'black'} size={30}/>
-                </View> */}
             </View>
             <View style={styles.footer}>
                 <Text style={styles.centerText}>Created by: Parker :)</Text>
                 <Text
                     style={{color:'lightblue', fontSize:8}}
-                    // onPress={() => Linking.openURL('https://simplemaps.com/data/us-cities')}
-                    onPress={() => Linking.openURL(`http://openweathermap.org/img/wn/${iconValue}@2x.png`)}
+                    onPress={() => Linking.openURL('https://simplemaps.com/data/us-cities')}
                 >
                     [City list obtained from simplemaps.com]
                 </Text>
@@ -145,7 +148,7 @@ const styles = StyleSheet.create({
     },  
     header: {
         padding: 10,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
     },
     icon: {
         height: 50,
@@ -161,7 +164,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderColor: '#000',
-        borderWidth: 1,
+        // borderWidth: 1,
         padding: 40,
     },
     searchBar: {
