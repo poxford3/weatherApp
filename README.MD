@@ -9,4 +9,4 @@ allow user to send request to the api for their city
 
 # current photo of app
 
-<img src="assets/currentImage.png" width="200" height="500">
+<img src="assets/currentImage.png" width="230" height="500" style="margin: auto;">
