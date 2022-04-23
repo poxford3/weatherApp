@@ -6,7 +6,9 @@ import { View,
          Linking, 
          ActivityIndicator,
          ImageBackground,
-         TouchableOpacity} from 'react-native'
+         TouchableOpacity,
+         TextInput} from 'react-native'
+import { AppLoading } from 'expo'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import React, {useState, useEffect} from 'react'
 import {SearchBar} from 'react-native-elements'
@@ -86,23 +88,21 @@ export default function IntroScreen({navigation}) {
                     <Text style={{fontWeight:'bold', }}>clouds!</Text>
                 </View>
                 <View style={{paddingVertical:15}}></View>
-                <SearchBar
+                <View style={{flexDirection: 'row', paddingHorizontal: 10,}}>
+                    <TextInput 
                         style={styles.searchBar}
-                        placeholder="Enter a city..."
+                        placeholder='Enter a city...'
                         value={search}
                         onChangeText={updateSearch}
-                        lightTheme
-                    />
-                <View style={{flexDirection: 'row'}}>
-
-                    <TouchableOpacity 
-                        style={{justifyContent: 'center', alignItems: 'center', backgroundColor: 'lightgray', borderRadius: 5, paddingLeft: -5}}
-                        onPress={() => navigation.navigate("Weather", {
-                            city: search
-                        })}
-                    >
-                        <Ionicons name='md-send-sharp' size={30}/>
-                    </TouchableOpacity>
+                        />
+                        <TouchableOpacity 
+                            style={{justifyContent: 'center', alignItems: 'center', borderRadius: 5,}}
+                            onPress={() => navigation.navigate("Weather", {
+                                city: search
+                            })}
+                        >
+                            <Ionicons name='md-send-sharp' size={30}/>
+                        </TouchableOpacity>
                 </View>
             </View> 
             <View style={styles.midSection}>
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     },  
     header: {
         padding: 10,
-        backgroundColor: '#fff',
+        // backgroundColor: '#fff',
     },
     icon: {
         height: 50,
@@ -159,19 +159,22 @@ const styles = StyleSheet.create({
     },
     midSection: {
         flex: 1,
-        // backgroundColor: '#fff',
+        // backgroundColor: 'rgba(0,0,0,0.2)',
         height: '50%',
         alignItems: 'center',
         justifyContent: 'center',
         borderColor: '#000',
-        // borderWidth: 1,
         padding: 40,
+        // opacity: .9,
     },
     searchBar: {
+        width: "90%",
+        height: 60,
         backgroundColor: '#fff',
         borderColor: '#000',
         borderWidth: 1,
         borderRadius: 5,
         padding: 5,
+        fontSize: 26,
     },
 })

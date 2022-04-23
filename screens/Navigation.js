@@ -9,7 +9,8 @@ import SettingsScreen from './SettingsScreen';
 const Stack = createNativeStackNavigator();
 export default function Navigation() {
     return (
-        <NavigationContainer>
+        <NavigationContainer
+        style={styles.container}>
             <Stack.Navigator
                 screenOptions={{
                     headerShown:false,

@@ -3,8 +3,9 @@
 weather app that's better than whatever you already use for your phone
 
 to do:
-set up what the image will be based on the type of weather we're seeing in the
-api response
+allow user to send request to the api for their city
+
+(now have ability to send info between screens)
 
 # current photo of app
 

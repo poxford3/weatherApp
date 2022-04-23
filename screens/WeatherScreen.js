@@ -3,13 +3,15 @@ import React from 'react'
 
 export default function WeatherScreen({ navigation, route }) {
 
-    const { name } = route.name
+    const { city } = route.params
+
+    console.log({city})
 
     return (
-    <SafeAreaView styles={styles.container}>
+    <View styles={styles.container}>
         <Text>WeatherScreen</Text>
-        <Text>{JSON.stringify(name)}</Text>
-    </SafeAreaView>
+        <Text>{JSON.stringify(city)}</Text>
+    </View>
   )
 }
 
