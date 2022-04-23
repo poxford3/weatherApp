@@ -111,7 +111,7 @@ export default function IntroScreen({navigation}) {
                 {typeof icon !== 'undefined' ? 
                 <View style={{justifyContent: 'center', alignItems: 'center' }}>
                     <Image style={styles.icon} source={{uri: `http://openweathermap.org/img/wn/${iconValue}@2x.png`}}/>
-                </View> 
+                </View>
                 : 
                 <View></View>}
             </View>
@@ -132,7 +132,7 @@ export default function IntroScreen({navigation}) {
 const styles = StyleSheet.create({
     centerText: {
         color: 'white',
-
+        textAlign: 'center'
     },
     container: {
         flex: 1,

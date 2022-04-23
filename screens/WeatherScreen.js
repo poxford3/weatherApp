@@ -1,17 +1,26 @@
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
 import React from 'react'
 
 export default function WeatherScreen({ navigation, route }) {
 
     const { city } = route.params
 
-    console.log({city})
+    const cityName = JSON.stringify(city).replace(/\"/g,"")
 
     return (
-    <View styles={styles.container}>
-        <Text>WeatherScreen</Text>
-        <Text>{JSON.stringify(city)}</Text>
-    </View>
+    <SafeAreaView styles={styles.container}>
+        <View style={styles.test}>
+            <TouchableOpacity
+            style={{backgroundColor: '#000', }}
+            // </View>onPress={navigation.navigate("Intro")}
+            >
+                <Text style={{color:'white'}}>go back</Text>
+            </TouchableOpacity>
+            <Text>WeatherScreen</Text>
+            <Text>{JSON.stringify(city)}</Text>
+            <Text>{cityName}</Text>
+        </View>
+    </SafeAreaView>
   )
 }
 
@@ -20,5 +29,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    test: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 })
