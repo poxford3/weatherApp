@@ -1,35 +1,40 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
+import { ActivityIndicator, View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
 
 export default function WeatherScreen({ navigation, route }) {
 
     const { city } = route.params;
     const [data, setData] = useState({});
     const [icon, setIcon] = useState([]);
+    const [isLoading, setLoading] = useState(true);
 
     const cityName = JSON.stringify(city).replace(/\"/g,"");
 
     const api_key = "08ff95f3b0f97607b3b375dc9793f8b2";
 
+    const getWeather = async () => {
+        try {
+            // console.log(lat," is lat and ",lng);
+            console.log('https://api.openweathermap.org/data/2.5/weather?units=imperial&q=' + cityName + '&appid='+api_key+'')
+            const response = (await fetch('https://api.openweathermap.org/data/2.5/weather?units=imperial&q=' + cityName + '&appid='+api_key+''));
+            const json = await response.json();
+            setData(json.main);
+            setIcon(json.weather)
+            console.log(json.temp, 'get weather');
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false)
+       }
+    }
+
     useEffect(() => {
-        const getWeather = async () => {
-            try {
-                // console.log(lat," is lat and ",lng);
-                const response = (await fetch('https://api.openweathermap.org/data/2.5/weather?units=imperial&q=' + cityName + '&appid='+api_key+''));
-                const json = (await response.json());
-                setData(json.main);
-                setIcon(json.weather)
-                console.log(json.temp, 'get weather');
-            } catch (error) {
-                console.error(error);
-            } finally {
-           }
-        }
         getWeather()
     }, [])
 
-    return (
-    <SafeAreaView style={styles.container}>
+    const isLoaded = () => {
+        return(
+        <>
         <View style={styles.test}>
             <TouchableOpacity
             style={{backgroundColor: '#000', }}
@@ -37,15 +42,22 @@ export default function WeatherScreen({ navigation, route }) {
             >
                 <Text style={{color:'white'}}>go back</Text>
             </TouchableOpacity>
-            {/* <Text>{JSON.stringify(city)}</Text> */}
             <Text>{cityName}</Text>
         </View>
         <View style={styles.header}>
             <Text style={styles.headerText}>
-                {cityName}
+                {cityName} 
             </Text>
         </View>
-    </SafeAreaView>
+        </>
+        )
+    }
+
+    return (
+        <SafeAreaView style={styles.container}>
+            {isLoading ? <ActivityIndicator size="large" color="#000"/> : isLoaded()}
+            {/* {isLoaded()} */}
+        </SafeAreaView>
   )
 }
 
