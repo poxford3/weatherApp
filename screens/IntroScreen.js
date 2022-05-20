@@ -28,7 +28,7 @@ export default function IntroScreen({navigation}) {
     var randCity,randLat,randLng = "";
     const api_key = "08ff95f3b0f97607b3b375dc9793f8b2";
 
-    useEffect(() => {
+    useEffect(() => { 
         const generateRandomCity = () => {
             console.log("-----")
             randCityTotal = cities[Math.floor(Math.random()*cities.length)];
@@ -47,11 +47,13 @@ export default function IntroScreen({navigation}) {
         const getWeather = async () => {
             try {
                 // console.log(lat," is lat and ",lng);
-                const response = (await fetch('https://api.openweathermap.org/data/2.5/weather?units=imperial&lat='+lat+'&lon='+lng+'&appid='+api_key+''));
-                const json = (await response.json());
+                const response = await fetch('https://api.openweathermap.org/data/2.5/weather?units=imperial&lat='+lat+'&lon='+lng+'&appid='+api_key+'')
+                const json = await response.json();
                 setData(json.main);
-                setIcon(json.weather)
-                // console.log(data.temp, 'get weather');
+                setIcon(json.weather);
+                console.log('web intro: ',json.cod)
+                icon.map(x => console.log(x.icon))
+                icon.map(x => setIconValue(x.icon))
             } catch (error) {
                 console.error(error);
             } finally {
@@ -61,20 +63,26 @@ export default function IntroScreen({navigation}) {
         getWeather()
     }, [lat,lng,randomCity])
 
-    useEffect(() => {
-        const getWeatherSymbol = () => {
-            icon.map(x => console.log(x.icon))
-            icon.map(x => setIconValue(x.icon))
-            // console.log(`http://openweathermap.org/img/wn/${iconValue}@2x.png`)
-        }
-        getWeatherSymbol()
-    }, [])
+    // useEffect(() => {
+    //     const getWeatherSymbol = () => {
+    //         icon.map(x => console.log(x.icon))
+    //         icon.map(x => setIconValue(x.icon))
+    //         // console.log(`http://openweathermap.org/img/wn/${iconValue}@2x.png`)
+    //     }
+    //     getWeatherSymbol()
+    // }, [])
 
     const [search, setSearch] = useState("");
 
     const updateSearch = (search) => {
       setSearch(search);
     };
+
+    const submitCity = () => {
+        navigation.navigate("Weather", {
+            city: search
+        })
+    }
 
     return (
         <ImageBackground
@@ -106,7 +114,7 @@ export default function IntroScreen({navigation}) {
                 </View>
             </View> 
             <View style={styles.midSection}>
-                <Text style={{fontSize: 30, justifyContent: 'center', color: 'white'}}>{randomCity}</Text>
+                <Text style={{fontSize: 30, textAlign:'center', justifyContent: 'center', color: 'white'}}>{randomCity}</Text>
                 {typeof data !== 'undefined' ? <Text style={styles.centerText}>{data.temp}°F</Text> : <View></View>}
                 {typeof icon !== 'undefined' ? 
                 <View style={{justifyContent: 'center', alignItems: 'center' }}>
